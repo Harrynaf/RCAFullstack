@@ -4,11 +4,15 @@
  */
 package com.rcafullstack.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rcafullstack.enums.PropertyType;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,13 +32,16 @@ public class Property implements Serializable {
     @Column(name = "address")
     private String address;
     @Column(name = "yearOfConstruction")
-    private LocalDate constructionYear;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private Date constructionYear;
     @Column(name = "propertyType")
     @Enumerated(value = EnumType.STRING)
     private PropertyType type;
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
     private User owner;
-    @OneToMany(mappedBy = "property", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "property", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Repair> repairs;
 
     public Property() {
@@ -49,7 +56,7 @@ public class Property implements Serializable {
      * @param type
      * @param owner
      */
-    public Property(String eCode, String address, LocalDate constructionYear, PropertyType type, User owner) {
+    public Property(String eCode, String address, Date constructionYear, PropertyType type, User owner) {
         this.eCode = eCode;
         this.address = address;
         this.constructionYear = constructionYear;
@@ -81,11 +88,11 @@ public class Property implements Serializable {
         this.address = address;
     }
 
-    public LocalDate getConstructionYear() {
+    public Date getConstructionYear() {
         return constructionYear;
     }
 
-    public void setConstructionYear(LocalDate constructionYear) {
+    public void setConstructionYear(Date constructionYear) {
         this.constructionYear = constructionYear;
     }
 

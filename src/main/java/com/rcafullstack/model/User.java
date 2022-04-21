@@ -5,6 +5,7 @@
 package com.rcafullstack.model;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rcafullstack.enums.User_Type;
 
 import javax.persistence.*;
@@ -36,7 +37,8 @@ public class User implements Serializable {
     private User_Type user_Type;
 
 
-    @OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Property> properties;
 
     public User() {

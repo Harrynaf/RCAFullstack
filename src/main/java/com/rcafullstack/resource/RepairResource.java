@@ -1,7 +1,7 @@
 package com.rcafullstack.resource;
 
-import com.rcafullstack.model.User;
-import com.rcafullstack.service.UserService;
+import com.rcafullstack.model.Repair;
+import com.rcafullstack.service.RepairService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -12,38 +12,37 @@ import javax.ws.rs.core.MediaType;
 public class RepairResource {
 
     @Inject
-    private UserService userService;
+    private RepairService repairService;
 
-    @Path("/")
-    @GET
-    @Produces("text/plain")
-    public String hello() {
-        return "Hello, World!";
-    }
-    
-     @Path("/links")
-    @GET
-    @Produces("text/html")
-    public String links() {
-        return "<a href='http://localhost:8080/jakartaeshop-1.0-SNAPSHOT/user/1'>links</a>";
-    }
-
-
-    @Path("/{userId}")
+    @Path("/{repairId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public User getUser(@PathParam("userId") int userId){
-        return userService.get(userId);
+    public Repair getRepair(@PathParam("repairId") long repairId){
+        return repairService.get(repairId);
     }
 
-     @Path("/")
+    @Path("/")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public User saveUser(User user){
-        return userService.create(user);
+    public Repair saveRepair(Repair repair){
+        return repairService.create(repair);
     }
-    
+
+    @Path("/")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Repair updateRepair(Repair repair){
+        return repairService.update(repair);
+    }
+
+    @Path("/")
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteRepair(long id){
+        repairService.delete(repairService.get(id));
+    }
 
 }

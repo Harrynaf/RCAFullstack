@@ -18,7 +18,7 @@ public abstract class ManageEntity {
     public void saveEntity(Object t) {
         try{
         transaction.begin();
-        entityManager.persist(t);
+        entityManager.persist(entityManager.contains(t) ? t : entityManager.merge(t));
         transaction.commit();}
         catch (Exception e)
         {log.error(e.getMessage());}
@@ -27,7 +27,7 @@ public abstract class ManageEntity {
     public void deleteEntity(Object t) {
         try{
             transaction.begin();
-            entityManager.remove(t);
+            entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
             transaction.commit();}
         catch (Exception e)
         {log.error(e.getMessage());}

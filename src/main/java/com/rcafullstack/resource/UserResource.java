@@ -1,6 +1,9 @@
 package com.rcafullstack.resource;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.rcafullstack.model.Property;
+import com.rcafullstack.model.Repair;
 import com.rcafullstack.model.User;
 import com.rcafullstack.service.UserService;
 import org.hibernate.Hibernate;
@@ -16,41 +19,35 @@ public class UserResource {
     @Inject
     private UserService userService;
 
-    @Path("/")
-    @GET
-    @Produces("text/plain")
-    public String hello() {
-        return "Hello, World!";
-    }
-    
-    @Path("/links")
-    @GET
-    @Produces("text/html")
-    public String links() {
-        return "<a href='http://localhost:8080/jakartaeshop-1.0-SNAPSHOT/user/1'>links</a>";
-    }
-
-
     @Path("/{userId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public User getUser(@PathParam("userId") int userId){
-
-        Hibernate.initialize(userService.get(userId).getProperties());
-        for (Property p:userService.get(userId).getProperties()
-             ) {Hibernate.initialize(p);
-        }
+    public User getUser(@PathParam("userId") long userId){
         return userService.get(userId);
     }
 
-    @Path("/save")
+    @Path("/")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public User saveUser(User user){
         return userService.create(user);
     }
-    
+
+    @Path("/")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public User updateUser(User user){
+        return userService.update(user);
+    }
+
+    @Path("/")
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteUser(long id){
+         userService.delete(userService.get(id));
+    }
 
 }

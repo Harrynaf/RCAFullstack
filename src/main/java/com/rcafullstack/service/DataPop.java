@@ -16,9 +16,11 @@ import javax.persistence.EntityExistsException;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class DataPop{
 
@@ -29,8 +31,6 @@ public class DataPop{
     @Inject
     private PropertyService propertyService;
     private static final Logger logger = LoggerFactory.getLogger(DataPop.class);
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
 
     public void run() {
     createData(userService, propertyService, repairService);}
@@ -53,10 +53,10 @@ public class DataPop{
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
-        Property property1 = new Property("E9_1", "Athens", LocalDate.of(2021, 1, 1), PropertyType.APARTMENT_BUILDING, userService.get(1L));
-        Property property2 = new Property("E9_2", "Athens", LocalDate.of(1987, 1, 1), PropertyType.MAISONETTE, userService.get(2L));
-        Property property3 = new Property("E9_3", "Athens", LocalDate.of(2005, 1, 1), PropertyType.DETACHED_HOUSE, userService.get(2L));
-        Property property4 = new Property("E9_4", "Athens", LocalDate.of(2001, 1, 1), PropertyType.APARTMENT_BUILDING, userService.get(3L));
+        Property property1 = new Property("E9_1", "Athens", Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), PropertyType.APARTMENT_BUILDING, userService.get(1L));
+        Property property2 = new Property("E9_2", "Athens", Date.from(Instant.parse("2001-02-01T13:35:00.00Z")), PropertyType.MAISONETTE, userService.get(2L));
+        Property property3 = new Property("E9_3", "Athens", Date.from(Instant.parse("2002-02-01T13:35:00.00Z")), PropertyType.DETACHED_HOUSE, userService.get(2L));
+        Property property4 = new Property("E9_4", "Athens", Date.from(Instant.parse("2003-02-01T13:35:00.00Z")), PropertyType.APARTMENT_BUILDING, userService.get(3L));
 
         try {
             propertyService.create(property1);
@@ -68,14 +68,14 @@ public class DataPop{
             logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
-        Repair repair1 = new Repair(propertyService.get(1L), LocalDateTime.parse("2022-02-01 15:30", formatter), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
-        Repair repair2 = new Repair(propertyService.get(2L), LocalDateTime.parse("2022-02-15 10:30", formatter), "repairDescription2", RepairType.FRAMES, RepairStatus.COMPLETE, new BigDecimal("100.0"), "workToDoDescription2");
-        Repair repair3 = new Repair(propertyService.get(3L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription3", RepairType.INSULATION, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
-        Repair repair4 = new Repair(propertyService.get(4L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription4", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("350.0"), "workToDoDescription4");
-        Repair repair5 = new Repair(propertyService.get(1L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription5", RepairType.PAINTING, RepairStatus.PENDING, new BigDecimal("450.0"), "workToDoDescription5");
-        Repair repair6 = new Repair(propertyService.get(2L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription6", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("365.0"), "workToDoDescription6");
-        Repair repair7 = new Repair(propertyService.get(3L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription7", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("700.0"), "workToDoDescription7");
-        Repair repair8 = new Repair(propertyService.get(4L), LocalDateTime.parse("2022-03-20 10:30", formatter), "repairDescription8", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("130.0"), "workToDoDescription8");
+        Repair repair1 = new Repair(propertyService.get(1L), Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
+        Repair repair2 = new Repair(propertyService.get(2L), Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), "repairDescription2", RepairType.FRAMES, RepairStatus.COMPLETE, new BigDecimal("100.0"), "workToDoDescription2");
+        Repair repair3 = new Repair(propertyService.get(3L), Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), "repairDescription3", RepairType.INSULATION, RepairStatus.PENDING, new BigDecimal("300.0"), "workToDoDescription3");
+        Repair repair4 = new Repair(propertyService.get(4L), Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), "repairDescription4", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("350.0"), "workToDoDescription4");
+        Repair repair5 = new Repair(propertyService.get(1L), Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), "repairDescription5", RepairType.PAINTING, RepairStatus.PENDING, new BigDecimal("450.0"), "workToDoDescription5");
+        Repair repair6 = new Repair(propertyService.get(2L), Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), "repairDescription6", RepairType.ELECTRICAL_WORK, RepairStatus.PENDING, new BigDecimal("365.0"), "workToDoDescription6");
+        Repair repair7 = new Repair(propertyService.get(3L), Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), "repairDescription7", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("700.0"), "workToDoDescription7");
+        Repair repair8 = new Repair(propertyService.get(4L), Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), "repairDescription8", RepairType.PLUMPING, RepairStatus.PENDING, new BigDecimal("130.0"), "workToDoDescription8");
 
         try {
             repairService.create(repair1);

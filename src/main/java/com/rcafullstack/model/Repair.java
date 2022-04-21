@@ -4,6 +4,8 @@
  */
 package com.rcafullstack.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rcafullstack.enums.RepairStatus;
 import com.rcafullstack.enums.RepairType;
 
@@ -11,6 +13,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *
@@ -24,11 +27,11 @@ public class Repair implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long repairId;
     @ManyToOne
-    private User owner;
-    @ManyToOne
+    @JsonBackReference
     private Property property;
     @Column(name = "date")
-    private LocalDateTime date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private Date date;
     @Column(name = "repairDescription")
     private String description;
     @Column(name = "repairType")
@@ -58,8 +61,7 @@ public class Repair implements Serializable {
      * @param cost
      * @param toDoDesc
      */
-    public Repair(Property property, LocalDateTime date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
-        this.owner= property.getOwner();
+    public Repair(Property property, Date date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
         this.property = property;
         this.date = date;
         this.description = description;
@@ -77,14 +79,6 @@ public class Repair implements Serializable {
         this.repairId = repairId;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
     public Property getProperty() {
         return property;
     }
@@ -93,11 +87,11 @@ public class Repair implements Serializable {
         this.property = property;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -144,7 +138,7 @@ public class Repair implements Serializable {
     @Override
     public String toString() {
         return "Repair{" + "repairId=" + repairId + 
-                ", ownerId=" + owner.getId() + 
+                ", ownerId=" + property.getOwner().getId() +
                 ", propertyId=" + property.getId() + 
                 ", date=" + date + 
                 ", description=" + description + 
