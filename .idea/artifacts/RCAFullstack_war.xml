@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="RCAFullstack:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>RCAFullstack</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="RCAFullstack-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="RCAFullstack:war exploded" />
+    </root>
+  </artifact>
+</component>
