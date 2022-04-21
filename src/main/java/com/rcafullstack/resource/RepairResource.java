@@ -14,7 +14,7 @@ public class RepairResource {
     @Inject
     private UserService userService;
 
-    @Path("/user")
+    @Path("/")
     @GET
     @Produces("text/plain")
     public String hello() {
