@@ -1,4 +1,3 @@
-# Default ignored files
-# file: ~/.gitignore_global
-.idea
-.target
+# Project exclude paths
+/target/
+/.idea/
