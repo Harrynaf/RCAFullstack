@@ -4,7 +4,6 @@
  */
 package com.rcafullstack.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rcafullstack.enums.RepairStatus;
 import com.rcafullstack.enums.RepairType;
@@ -12,7 +11,6 @@ import com.rcafullstack.enums.RepairType;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -25,7 +23,7 @@ public class Repair implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long repairId;
+    private Long id;
     @ManyToOne
     private Property property;
     @Column(name = "date")
@@ -70,12 +68,12 @@ public class Repair implements Serializable {
         this.toDoDesc = toDoDesc;
     }
 
-    public Long getRepairId() {
-        return repairId;
+    public Long getId() {
+        return id;
     }
 
-    public void setRepairId(Long repairId) {
-        this.repairId = repairId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Property getProperty() {
@@ -136,7 +134,7 @@ public class Repair implements Serializable {
 
     @Override
     public String toString() {
-        return "Repair{" + "repairId=" + repairId + 
+        return "Repair{" + "repairId=" + id +
                 ", ownerId=" + property.getOwner().getId() +
                 ", propertyId=" + property.getId() + 
                 ", date=" + date + 

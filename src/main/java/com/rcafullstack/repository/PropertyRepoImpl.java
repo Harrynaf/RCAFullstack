@@ -51,7 +51,7 @@ public class PropertyRepoImpl extends RepositoryImpl<Property> implements Proper
      * @return List of propeties
      */
     @Override
-    public List<Property> getAll() {
-        return entityManager.createQuery("SELECT p FROM Property p", Property.class).getResultList();
+    public String getClassName() {
+        return "Property";
     }
 }

@@ -20,7 +20,7 @@ import java.util.Date;
 public class RepairDTO implements Serializable {
 
 
-    private Long repairId;
+    private Long id;
 
     @JsonBackReference
     private PropertyDTO property;
@@ -65,12 +65,12 @@ public class RepairDTO implements Serializable {
         this.toDoDesc = toDoDesc;
     }
 
-    public Long getRepairId() {
-        return repairId;
+    public Long getId() {
+        return id;
     }
 
-    public void setRepairId(Long repairId) {
-        this.repairId = repairId;
+    public void setId(Long repairId) {
+        this.id = repairId;
     }
 
     public PropertyDTO getProperty() {
@@ -131,7 +131,7 @@ public class RepairDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "Repair{" + "repairId=" + repairId + 
+        return "Repair{" + "repairId=" + id +
                 ", ownerId=" + property.getOwner().getId() +
                 ", propertyId=" + property.getId() + 
                 ", date=" + date + 

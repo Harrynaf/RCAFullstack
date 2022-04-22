@@ -8,15 +8,8 @@ import java.util.List;
 
 
 public class UserRepoImpl extends RepositoryImpl<User> implements UserRepo {
-    @PersistenceContext(unitName="Persistence")
+    @PersistenceContext(unitName = "Persistence")
     private EntityManager entityManager;
-
-
-    
-    @Override
-    public List<User> getAll() {
-        return entityManager.createQuery("SELECT a FROM User a", User.class).getResultList();
-    }
 
 
     /**
@@ -56,5 +49,9 @@ public class UserRepoImpl extends RepositoryImpl<User> implements UserRepo {
     @Override
     public Class<User> getClassType() {
         return User.class;
+    }
+    @Override
+    public String getClassName() {
+        return "User";
     }
 }

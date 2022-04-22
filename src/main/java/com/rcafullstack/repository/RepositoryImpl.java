@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
+import java.util.List;
 
 @Slf4j
 public abstract class RepositoryImpl<T> implements Repository<T> {
@@ -38,4 +39,12 @@ public abstract class RepositoryImpl<T> implements Repository<T> {
         return entityManager.find( getClassType() , id);
     }
     public abstract Class<T> getClassType();
+
+    public abstract String getClassName();
+
+    @Override
+    public List<T> getAll() {
+        return entityManager.createQuery("from " + getClassName()).getResultList();
+    }
+
 }

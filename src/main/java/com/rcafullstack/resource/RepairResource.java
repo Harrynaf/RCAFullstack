@@ -1,15 +1,15 @@
 package com.rcafullstack.resource;
 
 import com.rcafullstack.dto.RepairDTO;
-import com.rcafullstack.dto.UserDTO;
 import com.rcafullstack.model.Repair;
-import com.rcafullstack.model.User;
 import com.rcafullstack.service.RepairService;
 import org.modelmapper.ModelMapper;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Path("/repair")
@@ -27,7 +27,17 @@ public class RepairResource {
     public RepairDTO getRepair(@PathParam("repairId") long repairId){
         return convertToDto(repairService.get(repairId));
     }
-
+    @Path("/all")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<RepairDTO> getAllRepair() {
+        List<RepairDTO> list = new ArrayList<>();
+        for (Repair r : repairService.getAll()) {
+            list.add(convertToDto(r));
+        }
+        return list;
+    }
     @Path("/")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
@@ -58,9 +68,9 @@ public class RepairResource {
     private Repair convertToEntity(RepairDTO repairDto) {
         Repair repair = modelMapper.map(repairDto, Repair.class);
 
-        if (repairDto.getRepairId() != null) {
-            Repair oldRepair = repairService.get(repairDto.getRepairId());
-            repair.setRepairId(oldRepair.getRepairId());
+        if (repairDto.getId() != null) {
+            Repair oldRepair = repairService.get(repairDto.getId());
+            repair.setId(oldRepair.getId());
         }
         return repair;
     }

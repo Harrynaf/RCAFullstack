@@ -21,16 +21,6 @@ public class RepairRepoImpl extends RepositoryImpl<Repair> implements RepairRepo
     private EntityManager entityManager;
 
     /**
-     * Returns a list with all repairs
-     *
-     * @return List of repairs
-     */
-    @Override
-    public List<Repair> getAll() {
-        return entityManager.createQuery("SELECT r FROM Repair r", Repair.class).getResultList();
-    }
-
-    /**
      * Returns a list of repairs with given date
      *
      * @param  date as LocalDateTime
@@ -86,5 +76,9 @@ public class RepairRepoImpl extends RepositoryImpl<Repair> implements RepairRepo
     @Override
     public Class<Repair> getClassType() {
         return Repair.class;
+    }
+    @Override
+    public String getClassName() {
+        return "Repair";
     }
 }

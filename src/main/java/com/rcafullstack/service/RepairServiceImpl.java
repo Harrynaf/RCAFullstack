@@ -47,7 +47,7 @@ public class RepairServiceImpl implements RepairService {
      */
     @Override
     public void delete(Repair repair) throws EntityNotFoundException {
-        if (get(repair.getRepairId()) != null) {
+        if (get(repair.getId()) != null) {
             repairRepo.delete(repair);
         } else {
             logger.error("Something went wrong. EntityNotFoundException");
@@ -64,7 +64,7 @@ public class RepairServiceImpl implements RepairService {
      */
     @Override
     public Repair update(Repair repair) throws EntityNotFoundException {
-        if (get(repair.getRepairId()) != null) {
+        if (get(repair.getId()) != null) {
             repairRepo.save(repair);
             return repair;
         } else {
