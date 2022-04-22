@@ -2,16 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.rcafullstack.model;
+package com.rcafullstack.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rcafullstack.enums.PropertyType;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -20,29 +18,26 @@ import java.util.Objects;
  *
  * @author Ioannis Psathas
  */
-@Entity
-@Table(name = "property")
-public class Property implements Serializable {
+public class PropertyDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "ePropertyCode", nullable = false, unique = true)
+
     private String eCode;
-    @Column(name = "address")
+
     private String address;
-    @Column(name = "yearOfConstruction")
+
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Date constructionYear;
-    @Column(name = "propertyType")
-    @Enumerated(value = EnumType.STRING)
-    private PropertyType type;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User owner;
-    @OneToMany(mappedBy = "property", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    private List<Repair> repairs;
 
-    public Property() {
+    private PropertyType type;
+
+    @JsonBackReference
+    private UserDTO owner;
+
+    @JsonManagedReference
+    private List<RepairDTO> repairDTOS;
+
+    public PropertyDTO() {
     }
 
     /**
@@ -54,7 +49,7 @@ public class Property implements Serializable {
      * @param type
      * @param owner
      */
-    public Property(String eCode, String address, Date constructionYear, PropertyType type, User owner) {
+    public PropertyDTO(String eCode, String address, Date constructionYear, PropertyType type, UserDTO owner) {
         this.eCode = eCode;
         this.address = address;
         this.constructionYear = constructionYear;
@@ -102,20 +97,20 @@ public class Property implements Serializable {
         this.type = type;
     }
 
-    public User getOwner() {
+    public UserDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(UserDTO owner) {
         this.owner = owner;
     }
 
-    public List<Repair> getRepairs() {
-        return repairs;
+    public List<RepairDTO> getRepairs() {
+        return repairDTOS;
     }
 
-    public void setRepairs(List<Repair> repairs) {
-        this.repairs = repairs;
+    public void setRepairs(List<RepairDTO> repairDTOS) {
+        this.repairDTOS = repairDTOS;
     }
 
     @Override
@@ -127,7 +122,7 @@ public class Property implements Serializable {
         hash = 43 * hash + Objects.hashCode(this.constructionYear);
         hash = 43 * hash + Objects.hashCode(this.type);
         hash = 43 * hash + Objects.hashCode(this.owner);
-        hash = 43 * hash + Objects.hashCode(this.repairs);
+        hash = 43 * hash + Objects.hashCode(this.repairDTOS);
         return hash;
     }
 
@@ -142,7 +137,7 @@ public class Property implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Property other = (Property) obj;
+        final PropertyDTO other = (PropertyDTO) obj;
         if (!Objects.equals(this.eCode, other.eCode)) {
             return false;
         }
@@ -161,7 +156,7 @@ public class Property implements Serializable {
         if (!Objects.equals(this.owner, other.owner)) {
             return false;
         }
-        return Objects.equals(this.repairs, other.repairs);
+        return Objects.equals(this.repairDTOS, other.repairDTOS);
     }
 
     @Override
@@ -172,6 +167,6 @@ public class Property implements Serializable {
                 ", constructionYear=" + constructionYear + 
                 ", type=" + type + 
                 ", ownerId=" + owner.getId() + 
-                ", repairs=" + repairs + '}';
+                ", repairs=" + repairDTOS + '}';
     }
 }

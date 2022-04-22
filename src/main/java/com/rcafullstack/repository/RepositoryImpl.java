@@ -8,14 +8,15 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 
 @Slf4j
-public abstract class ManageEntity {
+public abstract class RepositoryImpl<T> implements Repository<T> {
     @PersistenceContext(unitName="Persistence")
     private EntityManager entityManager;
 
     @Resource
     private UserTransaction transaction;
 
-    public void saveEntity(Object t) {
+    @Override
+    public void save(T t) {
         try{
         transaction.begin();
         entityManager.persist(entityManager.contains(t) ? t : entityManager.merge(t));
@@ -23,8 +24,8 @@ public abstract class ManageEntity {
         catch (Exception e)
         {log.error(e.getMessage());}
     }
-
-    public void deleteEntity(Object t) {
+    @Override
+    public void delete(T t) {
         try{
             transaction.begin();
             entityManager.remove(entityManager.contains(t) ? t : entityManager.merge(t));
@@ -32,4 +33,9 @@ public abstract class ManageEntity {
         catch (Exception e)
         {log.error(e.getMessage());}
     }
+    @Override
+    public T get(long id) {
+        return entityManager.find( getClassType() , id);
+    }
+    public abstract Class<T> getClassType();
 }

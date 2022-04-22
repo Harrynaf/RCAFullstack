@@ -16,19 +16,9 @@ import java.util.List;
  *
  * @author Agkoutsou
  */
-public class RepairRepoImpl extends ManageEntity implements RepairRepo {
+public class RepairRepoImpl extends RepositoryImpl<Repair> implements RepairRepo {
     @PersistenceContext(unitName="Persistence")
     private EntityManager entityManager;
-
-    @Override
-    public void save(Repair repair) {
-        super.saveEntity(repair);
-    }
-
-    @Override
-    public void delete(Repair repair) {
-        super.deleteEntity(repair);
-    }
 
     /**
      * Returns a list with all repairs
@@ -38,17 +28,6 @@ public class RepairRepoImpl extends ManageEntity implements RepairRepo {
     @Override
     public List<Repair> getAll() {
         return entityManager.createQuery("SELECT r FROM Repair r", Repair.class).getResultList();
-    }
-
-    /**
-     * Returns a repair with given id
-     *
-     * @param id as long
-     * @return repair
-     */
-    @Override
-    public Repair get(long id) {
-        return entityManager.find(Repair.class, id);
     }
 
     /**
@@ -86,7 +65,7 @@ public class RepairRepoImpl extends ManageEntity implements RepairRepo {
      */
     @Override
     public List<Repair> getRepairByOwnerId(long id) {
-        return entityManager.createQuery("SELECT r FROM Repair r WHERE r.owner.id = :id", Repair.class)
+        return entityManager.createQuery("SELECT r FROM Repair r WHERE r.property.owner.id = :id", Repair.class)
                             .setParameter("id", id)
                             .getResultList();
     }
@@ -102,5 +81,10 @@ public class RepairRepoImpl extends ManageEntity implements RepairRepo {
         return entityManager.createQuery("SELECT r FROM Repair r WHERE r.property.id = :id", Repair.class)
                             .setParameter("id", id)
                             .getResultList();
+    }
+
+    @Override
+    public Class<Repair> getClassType() {
+        return Repair.class;
     }
 }

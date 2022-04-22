@@ -15,27 +15,13 @@ import java.util.List;
  *
  * @author Ioannis Psathas
  */
-public class PropertyRepoImpl extends ManageEntity implements PropertyRepo {
+public class PropertyRepoImpl extends RepositoryImpl<Property> implements PropertyRepo {
     @PersistenceContext(unitName="Persistence")
     private EntityManager entityManager;
 
-    public void save(Property property) {
-        super.saveEntity(property);
-    }
-
-    public void delete(Property property) {
-        super.deleteEntity(property);
-    }
-    
-    /**
-     * Returns a property with given id
-     *
-     * @param  id as long
-     * @return property
-     */
     @Override
-    public Property get(long id) {
-        return entityManager.find(Property.class, id);
+    public Class<Property> getClassType() {
+        return Property.class;
     }
 
     /**

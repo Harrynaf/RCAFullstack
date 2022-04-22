@@ -2,52 +2,47 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.rcafullstack.model;
+package com.rcafullstack.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rcafullstack.enums.RepairStatus;
 import com.rcafullstack.enums.RepairType;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  *
  * @author Agkoutsou
  */
-@Entity
-@Table(name = "repair")
-public class Repair implements Serializable {
+public class RepairDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long repairId;
-    @ManyToOne
-    private Property property;
-    @Column(name = "date")
+
+    @JsonBackReference
+    private PropertyDTO property;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Date date;
-    @Column(name = "repairDescription")
+
     private String description;
-    @Column(name = "repairType")
-    @Enumerated(value = EnumType.STRING)
+
+
     private RepairType type;
-    @Column(name = "repairStatus")
-    @Enumerated(value = EnumType.STRING)
+
     private RepairStatus status = RepairStatus.STANDBY_MODE;
-    @Column(name = "cost")
+
     private BigDecimal cost;
-    @Column(name = "workToDoDescription")
+
     private String toDoDesc;
 
     /**
      * NoArgs Constructor
      */
-    public Repair() {}
+    public RepairDTO() {}
 
     /**
      * Constructor without id
@@ -60,7 +55,7 @@ public class Repair implements Serializable {
      * @param cost
      * @param toDoDesc
      */
-    public Repair(Property property, Date date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
+    public RepairDTO(PropertyDTO property, Date date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
         this.property = property;
         this.date = date;
         this.description = description;
@@ -78,11 +73,11 @@ public class Repair implements Serializable {
         this.repairId = repairId;
     }
 
-    public Property getProperty() {
+    public PropertyDTO getProperty() {
         return property;
     }
 
-    public void setProperty(Property property) {
+    public void setProperty(PropertyDTO property) {
         this.property = property;
     }
 

@@ -7,30 +7,17 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 
-public class UserRepoImpl extends ManageEntity implements UserRepo {
+public class UserRepoImpl extends RepositoryImpl<User> implements UserRepo {
     @PersistenceContext(unitName="Persistence")
     private EntityManager entityManager;
 
 
-    @Override
-    public void save(User user) {
-        super.saveEntity(user);
-    }
-
-    @Override
-    public void delete(User user) {
-        super.deleteEntity(user);
-    }
     
     @Override
     public List<User> getAll() {
         return entityManager.createQuery("SELECT a FROM User a", User.class).getResultList();
     }
 
-    @Override
-    public User get(long id) {
-        return entityManager.find(User.class, id);
-    }
 
     /**
      * Finds user by username and returns boolean
@@ -64,5 +51,10 @@ public class UserRepoImpl extends ManageEntity implements UserRepo {
     @Override
     public User getByEmail(String email) {
         return entityManager.createQuery("SELECT s FROM User s WHERE s.email = :email", User.class).setParameter("email", email).getSingleResult();
+    }
+
+    @Override
+    public Class<User> getClassType() {
+        return User.class;
     }
 }

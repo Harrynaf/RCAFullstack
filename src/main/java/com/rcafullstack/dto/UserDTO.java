@@ -2,45 +2,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.rcafullstack.model;
+package com.rcafullstack.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rcafullstack.enums.User_Type;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author hnafp
  */
-@Entity
-@Table(name = "user")
-public class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+public class UserDTO implements Serializable {
+
     private Long id;
-    @Column(unique = true)
     private String username;
     private String password;
-    @Column(unique=true)
     private String vat;
     private String name;
     private String surname;
     private String address;
-    @Column(unique=true)
     private String phone_number;
-    @Column(unique=true)
     private String email;
-    @Enumerated(value = EnumType.STRING)
     private User_Type user_Type;
 
+    @JsonManagedReference
+    private List<PropertyDTO> properties;
 
-    @OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    private List<Property> properties;
-
-    public User() {
+    public UserDTO() {
     }
 
     public Long getId() {
@@ -123,15 +114,15 @@ public class User implements Serializable {
         this.user_Type = user_Type;
     }
 
-    public List<Property> getProperties() {
+    public List<PropertyDTO> getProperties() {
         return properties;
     }
 
-    public void setProperties(List<Property> properties) {
+    public void setProperties(List<PropertyDTO> properties) {
         this.properties = properties;
     }
 
-    public User(String vat, String name, String surname, String address, String phone_number, String email,String username, String password, User_Type user_Type) {
+    public UserDTO(String vat, String name, String surname, String address, String phone_number, String email, String username, String password, User_Type user_Type) {
         this.username = username;
         this.password = password;
         this.vat = vat;
