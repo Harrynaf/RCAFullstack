@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
- * An ipmplementation of PropertyRepo
+ * An implementation of PropertyRepo
  *
  * @author Ioannis Psathas
  */
@@ -48,7 +48,7 @@ public class PropertyRepoImpl extends RepositoryImpl<Property> implements Proper
     /**
      * Retuns a list with all properties
      *
-     * @return List of propeties
+     * @return List of properties
      */
     @Override
     public String getClassName() {

@@ -8,6 +8,5 @@ public interface Service<T> {
     void delete(T t);
     T update(T t);
     List<T> getAll();
-    @Transactional//(propagation=Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     T get(long id);
 }

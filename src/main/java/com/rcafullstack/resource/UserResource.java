@@ -1,9 +1,13 @@
 package com.rcafullstack.resource;
 
+import com.rcafullstack.dto.PropertyDTO;
 import com.rcafullstack.dto.UserDTO;
+import com.rcafullstack.model.Property;
+import com.rcafullstack.model.Repair;
 import com.rcafullstack.model.User;
 import com.rcafullstack.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -64,7 +68,9 @@ public class UserResource {
     }
 
     private UserDTO convertToDto(User user) {
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
         UserDTO userDto = modelMapper.map(user, UserDTO.class);
+
         return userDto;
     }
 
@@ -78,3 +84,25 @@ public class UserResource {
         return user;
     }
 }
+
+/*
+   User user = User.builder().user_Type(userDto.getUser_Type())
+                .address(userDto.getAddress())
+                .email(userDto.getEmail())
+                .name(userDto.getName())
+                .password(userDto.getPassword())
+                .phone_number(userDto.getPhone_number())
+                .build();
+
+        int pCount = 0;
+        int rCount = 0;
+        for (PropertyDTO p : userDto.getProperties()) {
+            user.getProperties().add(modelMapper.map(p, Property.class));
+            for (Repair r : user.getProperties().get(pCount).getRepairs()) {
+                user.getProperties().get(rCount).getRepairs().add(r);
+                rCount++;
+            }
+        }
+        pCount++;
+
+ */

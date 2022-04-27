@@ -9,6 +9,8 @@ import com.rcafullstack.model.Property;
 import com.rcafullstack.model.Repair;
 import com.rcafullstack.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
@@ -29,7 +31,7 @@ public class DataPop{
     private RepairService repairService;
     @Inject
     private PropertyService propertyService;
-
+    private static final Logger logger = LoggerFactory.getLogger(DataPop.class);
     public void run() {
     createData(userService, propertyService, repairService);}
 
@@ -39,16 +41,16 @@ public class DataPop{
         User owner2 = new User("123412789", "Harry", "Naf", "Athens", "6991234234", "harry@mail.com", "harry", "11111", User_Type.OWNER);
         User owner3 = new User("123457459", "Aggelos", "Koutsou", "Athens", "6935523423", "aggelos@mail.com", "aggelos", "11111", User_Type.OWNER);
 
-        log.info("This is a sample log!");
-        log.info("This is a sample log input date {}", LocalDate.now());
+        logger.info("This is a sample logger!");
+        logger.info("This is a sample logger input date {}", LocalDate.now());
 
         try {
             userService.create(owner1);
             userService.create(owner2);
             userService.create(owner3);
-            log.info("All good with creating owner data");
+            logger.info("All good with creating owner data");
         } catch (EntityExistsException e) {
-            log.error("Something went wrong. Details: {}", e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
         Property property1 = new Property("E9_1", "Athens", Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), PropertyType.APARTMENT_BUILDING, userService.get(1L));
@@ -61,9 +63,9 @@ public class DataPop{
             propertyService.create(property2);
             propertyService.create(property3);
             propertyService.create(property4);
-            log.info("All good with creating property data");
+            logger.info("All good with creating property data");
         } catch (EntityExistsException e) {
-            log.error("Something went wrong. Details: {}", e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
 
         Repair repair1 = new Repair(propertyService.get(1L), Date.from(Instant.parse("2022-02-01T13:35:00.00Z")), "repairDescription1", RepairType.PAINTING, RepairStatus.IN_PROGRESS, new BigDecimal("200.0"), "workToDoDescription1");
@@ -84,9 +86,9 @@ public class DataPop{
             repairService.create(repair6);
             repairService.create(repair7);
             repairService.create(repair8);
-            log.info("All good with creating repair data");
+            logger.info("All good with creating repair data");
         } catch (EntityExistsException e) {
-            log.error("Something went wrong. Details: {}", e.getMessage());
+            logger.error("Something went wrong. Details: {}", e.getMessage());
         }
     }
 }

@@ -5,7 +5,7 @@
              version="2.2">
     <persistence-unit name="Persistence" transaction-type="JTA" >
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <jta-data-source>java:/EDeshop</jta-data-source>
+        <jta-data-source>java:/MySqlDS</jta-data-source>
         <properties>
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
