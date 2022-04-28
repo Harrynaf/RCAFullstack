@@ -16,6 +16,7 @@ import java.util.List;
  * @author Ioannis Psathas
  */
 public class PropertyRepoImpl extends RepositoryImpl<Property> implements PropertyRepo {
+    private static final String CLASSNAME = "Property";
     @PersistenceContext(unitName="Persistence")
     private EntityManager entityManager;
 
@@ -52,6 +53,6 @@ public class PropertyRepoImpl extends RepositoryImpl<Property> implements Proper
      */
     @Override
     public String getClassName() {
-        return "Property";
+        return CLASSNAME;
     }
 }

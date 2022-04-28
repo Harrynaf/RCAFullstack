@@ -8,6 +8,7 @@ import java.util.List;
 
 
 public class UserRepoImpl extends RepositoryImpl<User> implements UserRepo {
+    private static final String CLASSNAME = "User";
     @PersistenceContext(unitName = "Persistence")
     private EntityManager entityManager;
 
@@ -52,6 +53,6 @@ public class UserRepoImpl extends RepositoryImpl<User> implements UserRepo {
     }
     @Override
     public String getClassName() {
-        return "User";
+        return CLASSNAME;
     }
 }

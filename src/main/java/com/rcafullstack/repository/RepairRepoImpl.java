@@ -17,6 +17,7 @@ import java.util.List;
  * @author Agkoutsou
  */
 public class RepairRepoImpl extends RepositoryImpl<Repair> implements RepairRepo {
+    private static final String CLASSNAME = "Repair";
     @PersistenceContext(unitName="Persistence")
     private EntityManager entityManager;
 
@@ -79,6 +80,6 @@ public class RepairRepoImpl extends RepositoryImpl<Repair> implements RepairRepo
     }
     @Override
     public String getClassName() {
-        return "Repair";
+        return CLASSNAME;
     }
 }
