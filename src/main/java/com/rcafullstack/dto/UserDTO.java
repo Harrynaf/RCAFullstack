@@ -28,7 +28,7 @@ public class UserDTO implements Serializable {
     private String email;
     private User_Type user_Type;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="userRef")
     private List<PropertyDTO> properties;
 
     public UserDTO() {

@@ -31,10 +31,10 @@ public class PropertyDTO implements Serializable {
 
     private PropertyType type;
 
-    @JsonBackReference
+    @JsonBackReference(value="userRef")
     private UserDTO owner;
 
-    @JsonManagedReference
+    @JsonManagedReference(value="repairRef")
     private List<RepairDTO> repairDTOS;
 
     public PropertyDTO() {

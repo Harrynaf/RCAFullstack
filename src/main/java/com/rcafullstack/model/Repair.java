@@ -26,7 +26,7 @@ public class Repair implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value="repairRef")
     private Property property;
     @Column(name = "date")
     @JsonFormat(shape = JsonFormat.Shape.STRING)

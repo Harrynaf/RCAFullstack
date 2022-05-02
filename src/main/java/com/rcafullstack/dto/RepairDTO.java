@@ -22,7 +22,7 @@ public class RepairDTO implements Serializable {
 
     private Long id;
 
-    @JsonBackReference
+    @JsonBackReference(value="repairRef")
     private PropertyDTO property;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING)
