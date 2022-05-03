@@ -63,8 +63,8 @@ public class UserResource {
     @Path("/")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteUser(long id) {
-        userService.delete(userService.get(id));
+    public void deleteUser(UserDTO user) {
+        userService.delete(userService.get(user.getId()));
     }
 
     private UserDTO convertToDto(User user) {

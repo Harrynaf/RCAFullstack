@@ -1,6 +1,8 @@
 package com.rcafullstack.resource;
 
+import com.rcafullstack.dto.PropertyDTO;
 import com.rcafullstack.dto.RepairDTO;
+import com.rcafullstack.model.Property;
 import com.rcafullstack.model.Repair;
 import com.rcafullstack.service.RepairService;
 import org.modelmapper.ModelMapper;
@@ -26,6 +28,17 @@ public class RepairResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public RepairDTO getRepair(@PathParam("repairId") long repairId){
         return convertToDto(repairService.get(repairId));
+    }
+    @Path("/property/{propertyId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<RepairDTO> getRepairByProperty(@PathParam("propertyId") long propertyId){
+        List<RepairDTO> list = new ArrayList<>();
+        for (Repair r:repairService.getRepairByPropertyId(propertyId)
+        ) {list.add(convertToDto(r));
+        }
+        return list;
     }
     @Path("/all")
     @GET
@@ -57,8 +70,8 @@ public class RepairResource {
     @Path("/")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteRepair(long id){
-        repairService.delete(repairService.get(id));
+    public void deleteRepair(RepairDTO repair){
+        repairService.delete(repairService.get(repair.getId()));
     }
     private RepairDTO convertToDto(Repair repair) {
         RepairDTO repairDto = modelMapper.map(repair, RepairDTO.class);

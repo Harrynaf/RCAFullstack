@@ -46,6 +46,11 @@ public class PropertyRepoImpl extends RepositoryImpl<Property> implements Proper
         return entityManager.createQuery("SELECT p FROM Property p WHERE p.eCode = :ecode", Property.class).setParameter("ecode", eCode).getResultList();
     }
 
+    @Override
+    public List<Property> getByUser(long id) {
+        return entityManager.createQuery("SELECT p FROM Property p WHERE p.owner.id = :id", Property.class).setParameter("id", id).getResultList();
+    }
+
     /**
      * Retuns a list with all properties
      *

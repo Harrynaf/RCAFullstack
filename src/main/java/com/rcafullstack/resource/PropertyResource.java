@@ -27,6 +27,17 @@ public class PropertyResource {
     public PropertyDTO getProperty(@PathParam("propertyId") long propertyId){
         return convertToDto(propertyService.get(propertyId));
     }
+    @Path("/user/{userId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<PropertyDTO> getPropertyByUser(@PathParam("userId") long propertyId){
+        List<PropertyDTO> list = new ArrayList<>();
+        for (Property p:propertyService.getByUser(propertyId)
+             ) {list.add(convertToDto(p));
+        }
+        return list;
+    }
     @Path("/all")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -57,8 +68,8 @@ public class PropertyResource {
     @Path("/")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteProperty(long id){
-        propertyService.delete(propertyService.get(id));
+    public void deleteProperty(PropertyDTO property){
+        propertyService.delete(propertyService.get(property.getId()));
     }
     private PropertyDTO convertToDto(Property property) {
         PropertyDTO propertyDto = modelMapper.map(property, PropertyDTO.class);

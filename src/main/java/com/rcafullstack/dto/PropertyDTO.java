@@ -31,12 +31,6 @@ public class PropertyDTO implements Serializable {
 
     private PropertyType type;
 
-    @JsonBackReference(value="userRef")
-    private UserDTO owner;
-
-    @JsonManagedReference(value="repairRef")
-    private List<RepairDTO> repairDTOS;
-
     public PropertyDTO() {
     }
 
@@ -47,14 +41,12 @@ public class PropertyDTO implements Serializable {
      * @param address
      * @param constructionYear
      * @param type
-     * @param owner
      */
-    public PropertyDTO(String eCode, String address, Date constructionYear, PropertyType type, UserDTO owner) {
+    public PropertyDTO(String eCode, String address, Date constructionYear, PropertyType type) {
         this.eCode = eCode;
         this.address = address;
         this.constructionYear = constructionYear;
         this.type = type;
-        this.owner = owner;
     }
 
     public Long getId() {
@@ -97,76 +89,12 @@ public class PropertyDTO implements Serializable {
         this.type = type;
     }
 
-    public UserDTO getOwner() {
-        return owner;
-    }
-
-    public void setOwner(UserDTO owner) {
-        this.owner = owner;
-    }
-
-    public List<RepairDTO> getRepairs() {
-        return repairDTOS;
-    }
-
-    public void setRepairs(List<RepairDTO> repairDTOS) {
-        this.repairDTOS = repairDTOS;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 43 * hash + Objects.hashCode(this.id);
-        hash = 43 * hash + Objects.hashCode(this.eCode);
-        hash = 43 * hash + Objects.hashCode(this.address);
-        hash = 43 * hash + Objects.hashCode(this.constructionYear);
-        hash = 43 * hash + Objects.hashCode(this.type);
-        hash = 43 * hash + Objects.hashCode(this.owner);
-        hash = 43 * hash + Objects.hashCode(this.repairDTOS);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final PropertyDTO other = (PropertyDTO) obj;
-        if (!Objects.equals(this.eCode, other.eCode)) {
-            return false;
-        }
-        if (!Objects.equals(this.address, other.address)) {
-            return false;
-        }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        if (!Objects.equals(this.constructionYear, other.constructionYear)) {
-            return false;
-        }
-        if (this.type != other.type) {
-            return false;
-        }
-        if (!Objects.equals(this.owner, other.owner)) {
-            return false;
-        }
-        return Objects.equals(this.repairDTOS, other.repairDTOS);
-    }
-
     @Override
     public String toString() {
         return "Property{" + "id=" + id + 
                 ", eCode=" + eCode + 
                 ", address=" + address + 
                 ", constructionYear=" + constructionYear + 
-                ", type=" + type + 
-                ", ownerId=" + owner.getId() + 
-                ", repairs=" + repairDTOS + '}';
+                ", type=" + type + '}';
     }
 }

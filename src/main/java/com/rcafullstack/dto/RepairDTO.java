@@ -22,9 +22,6 @@ public class RepairDTO implements Serializable {
 
     private Long id;
 
-    @JsonBackReference(value="repairRef")
-    private PropertyDTO property;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Date date;
 
@@ -47,7 +44,6 @@ public class RepairDTO implements Serializable {
     /**
      * Constructor without id
      *
-     * @param property
      * @param date
      * @param description
      * @param type
@@ -55,8 +51,7 @@ public class RepairDTO implements Serializable {
      * @param cost
      * @param toDoDesc
      */
-    public RepairDTO(PropertyDTO property, Date date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
-        this.property = property;
+    public RepairDTO(Date date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
         this.date = date;
         this.description = description;
         this.type = type;
@@ -71,14 +66,6 @@ public class RepairDTO implements Serializable {
 
     public void setId(Long repairId) {
         this.id = repairId;
-    }
-
-    public PropertyDTO getProperty() {
-        return property;
-    }
-
-    public void setProperty(PropertyDTO property) {
-        this.property = property;
     }
 
     public Date getDate() {
@@ -132,8 +119,6 @@ public class RepairDTO implements Serializable {
     @Override
     public String toString() {
         return "Repair{" + "repairId=" + id +
-                ", ownerId=" + property.getOwner().getId() +
-                ", propertyId=" + property.getId() + 
                 ", date=" + date + 
                 ", description=" + description + 
                 ", type=" + type + 

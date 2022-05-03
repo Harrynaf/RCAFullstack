@@ -119,4 +119,9 @@ public class PropertyServiceImpl implements PropertyService {
     public boolean foundByECode(Property property) {
         return !propertyRepo.getByECode(property.geteCode()).isEmpty();
     }
+
+    @Override
+    public List<Property> getByUser(long id) {
+        return propertyRepo.getByUser(id);
+    }
 }

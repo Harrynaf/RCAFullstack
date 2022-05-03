@@ -16,4 +16,5 @@ import java.util.List;
 public interface PropertyService extends Service<Property> {
     List<Property> getByVat(String vat);
     boolean foundByECode(Property property);
+    List<Property> getByUser(long id);
 }

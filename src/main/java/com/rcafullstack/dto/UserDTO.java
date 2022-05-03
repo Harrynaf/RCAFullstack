@@ -28,9 +28,6 @@ public class UserDTO implements Serializable {
     private String email;
     private User_Type user_Type;
 
-    @JsonManagedReference(value="userRef")
-    private List<PropertyDTO> properties;
-
     public UserDTO() {
     }
 
@@ -114,14 +111,6 @@ public class UserDTO implements Serializable {
         this.user_Type = user_Type;
     }
 
-    public List<PropertyDTO> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(List<PropertyDTO> properties) {
-        this.properties = properties;
-    }
-
     public UserDTO(String vat, String name, String surname, String address, String phone_number, String email, String username, String password, User_Type user_Type) {
         this.username = username;
         this.password = password;
@@ -146,7 +135,6 @@ public class UserDTO implements Serializable {
                 ", phone_number='" + phone_number + '\'' +
                 ", email='" + email + '\'' +
                 ", user_Type=" + user_Type +
-                ", properties=" + properties +
                 '}';
     }
 }
