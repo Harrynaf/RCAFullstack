@@ -22,6 +22,8 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
+    private static final String DELETED="Deleted.";
+    private static final String NOTFOUND="Not found.";
 
     //@Inject
     private ModelMapper modelMapper = new ModelMapper();
@@ -56,18 +58,11 @@ public class UserResource {
        try {return userService.update(convertToEntity(user));}
        catch(EntityNotFoundException e){User userError =new User(); userError.setId(-1L); return userError;}}
 
-    @Path("/")
+    @Path("/{userId}")
     @DELETE
-    public String deleteUser(UserDTO user)
-    {try {userService.delete(userService.get(user.getId())); return "Deleted";}
-        catch(EntityNotFoundException e){return "Not Found";}}
-
-//    @Path("/{userId}")
-//    @DELETE
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    public void deleteUser(@PathParam("userId") long userId){
-//        userService.delete(userService.get(userId));
-//    }
+    public String deleteUser(@PathParam("userId") long userId)
+    {try {userService.delete(userService.get(userId)); return DELETED;}
+        catch(Exception e){return NOTFOUND;}}
 
     private UserDTO convertToDto(User user) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);

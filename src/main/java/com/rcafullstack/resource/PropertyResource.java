@@ -18,7 +18,8 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PropertyResource {
-
+    private static final String DELETED="Deleted.";
+    private static final String NOTFOUND="Not found.";
     //@Inject
     private ModelMapper modelMapper = new ModelMapper();
     @Inject
@@ -59,11 +60,11 @@ public class PropertyResource {
     {try {return propertyService.update(convertToEntity(property));}
     catch(EntityNotFoundException e){Property propertyError =new Property(); propertyError.setId(-1L); return propertyError;}}
 
-    @Path("/")
+    @Path("/{propertyId}")
     @DELETE
-    public String deleteProperty(PropertyDTO property)
-    {try {propertyService.delete(propertyService.get(property.getId())); return "Deleted";}
-    catch(EntityNotFoundException e){return "Not Found";}}
+    public String deleteProperty(@PathParam("propertyId") long propertyId)
+    {try {propertyService.delete(propertyService.get(propertyId)); return DELETED;}
+    catch(Exception e){return NOTFOUND;}}
     private PropertyDTO convertToDto(Property property) {
         PropertyDTO propertyDto = modelMapper.map(property, PropertyDTO.class);
         return propertyDto;

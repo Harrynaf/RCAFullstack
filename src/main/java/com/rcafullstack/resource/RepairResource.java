@@ -20,7 +20,8 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RepairResource {
-
+    private static final String DELETED="Deleted.";
+    private static final String NOTFOUND="Not found.";
     //@Inject
     private ModelMapper modelMapper = new ModelMapper();
     @Inject
@@ -61,11 +62,11 @@ public class RepairResource {
     {try {return repairService.update(convertToEntity(repair));}
         catch(EntityNotFoundException e){Repair repairError =new Repair(); repairError.setId(-1L); return repairError;}}
 
-    @Path("/")
+    @Path("/{repairId}")
     @DELETE
-    public String deleteRepair(RepairDTO repair)
-    {try {repairService.delete(repairService.get(repair.getId()));; return "Deleted";}
-    catch(EntityNotFoundException e){return "Not Found";}}
+    public String deleteRepair(@PathParam("repairId") long repairId)
+    {try {repairService.delete(repairService.get(repairId)); return DELETED;}
+    catch(Exception e){return NOTFOUND;}}
     private RepairDTO convertToDto(Repair repair) {
         RepairDTO repairDto = modelMapper.map(repair, RepairDTO.class);
         return repairDto;
