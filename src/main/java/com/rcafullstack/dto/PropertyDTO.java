@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rcafullstack.enums.PropertyType;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -21,14 +22,14 @@ import java.util.Objects;
 public class PropertyDTO implements Serializable {
 
     private Long id;
-
+    @NotNull
     private String eCode;
-
+    @NotNull
     private String address;
-
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Date constructionYear;
-
+    @NotNull
     private PropertyType type;
 
     public PropertyDTO() {

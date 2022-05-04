@@ -2,10 +2,12 @@ package com.rcafullstack.resource;
 
 import com.rcafullstack.dto.PropertyDTO;
 import com.rcafullstack.model.Property;
+import com.rcafullstack.model.Repair;
 import com.rcafullstack.service.PropertyService;
 import org.modelmapper.ModelMapper;
 
 import javax.inject.Inject;
+import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.List;
 
 
 @Path("/property")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class PropertyResource {
 
     //@Inject
@@ -22,15 +26,11 @@ public class PropertyResource {
 
     @Path("/{propertyId}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public PropertyDTO getProperty(@PathParam("propertyId") long propertyId){
         return convertToDto(propertyService.get(propertyId));
     }
     @Path("/user/{userId}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public List<PropertyDTO> getPropertyByUser(@PathParam("userId") long propertyId){
         List<PropertyDTO> list = new ArrayList<>();
         for (Property p:propertyService.getByUser(propertyId)
@@ -40,8 +40,6 @@ public class PropertyResource {
     }
     @Path("/all")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public List<PropertyDTO> getAllProperty() {
         List<PropertyDTO> list = new ArrayList<>();
         for (Property r : propertyService.getAll()) {
@@ -51,26 +49,21 @@ public class PropertyResource {
     }
     @Path("/")
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Property saveProperty(PropertyDTO property){
-        return propertyService.create(convertToEntity(property));
-    }
+    public Property saveProperty(PropertyDTO property)
+    {try {return propertyService.create(convertToEntity(property));}
+    catch(EntityNotFoundException e){Property propertyError =new Property(); propertyError.setId(-1L); return propertyError;}}
 
     @Path("/")
     @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Property updateProperty(PropertyDTO property){
-        return propertyService.update(convertToEntity(property));
-    }
+    public Property updateProperty(PropertyDTO property)
+    {try {return propertyService.update(convertToEntity(property));}
+    catch(EntityNotFoundException e){Property propertyError =new Property(); propertyError.setId(-1L); return propertyError;}}
 
     @Path("/")
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteProperty(PropertyDTO property){
-        propertyService.delete(propertyService.get(property.getId()));
-    }
+    public String deleteProperty(PropertyDTO property)
+    {try {propertyService.delete(propertyService.get(property.getId())); return "Deleted";}
+    catch(EntityNotFoundException e){return "Not Found";}}
     private PropertyDTO convertToDto(Property property) {
         PropertyDTO propertyDto = modelMapper.map(property, PropertyDTO.class);
         return propertyDto;

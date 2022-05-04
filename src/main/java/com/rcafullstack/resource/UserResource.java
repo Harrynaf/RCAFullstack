@@ -10,6 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
 import javax.inject.Inject;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ import java.util.List;
 
 
 @Path("/user")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
 
     //@Inject
@@ -26,16 +30,12 @@ public class UserResource {
 
     @Path("/{userId}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public UserDTO getUser(@PathParam("userId") long userId) {
         return convertToDto(userService.get(userId));
     }
 
     @Path("/all")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public List<UserDTO> getAllUser() {
         List<UserDTO> list = new ArrayList<>();
         for (User u : userService.getAll()) {
@@ -46,26 +46,28 @@ public class UserResource {
 
     @Path("/")
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public User saveUser(UserDTO user) {
-        return userService.create(convertToEntity(user));
-    }
+    public User saveUser(UserDTO user)
+    {try {return userService.create(convertToEntity(user));}
+        catch(EntityExistsException e){User userError =new User(); userError.setId(-1L); return userError;}}
 
     @Path("/")
     @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     public User updateUser(UserDTO user) {
-        return userService.update(convertToEntity(user));
-    }
+       try {return userService.update(convertToEntity(user));}
+       catch(EntityNotFoundException e){User userError =new User(); userError.setId(-1L); return userError;}}
 
     @Path("/")
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteUser(UserDTO user) {
-        userService.delete(userService.get(user.getId()));
-    }
+    public String deleteUser(UserDTO user)
+    {try {userService.delete(userService.get(user.getId())); return "Deleted";}
+        catch(EntityNotFoundException e){return "Not Found";}}
+
+//    @Path("/{userId}")
+//    @DELETE
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public void deleteUser(@PathParam("userId") long userId){
+//        userService.delete(userService.get(userId));
+//    }
 
     private UserDTO convertToDto(User user) {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);

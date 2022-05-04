@@ -8,6 +8,7 @@ package com.rcafullstack.dto;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rcafullstack.enums.User_Type;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,14 +19,23 @@ import java.util.List;
 public class UserDTO implements Serializable {
 
     private Long id;
+    @NotNull
     private String username;
+    @NotNull
     private String password;
+    @NotNull
     private String vat;
+    @NotNull
     private String name;
+    @NotNull
     private String surname;
+    @NotNull
     private String address;
+    @NotNull
     private String phone_number;
+    @NotNull
     private String email;
+    @NotNull
     private User_Type user_Type;
 
     public UserDTO() {

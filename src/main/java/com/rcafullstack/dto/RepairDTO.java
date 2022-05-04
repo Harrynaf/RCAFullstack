@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rcafullstack.enums.RepairStatus;
 import com.rcafullstack.enums.RepairType;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -21,19 +22,19 @@ public class RepairDTO implements Serializable {
 
 
     private Long id;
-
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Date date;
-
+    @NotNull
     private String description;
 
-
+    @NotNull
     private RepairType type;
-
+    @NotNull
     private RepairStatus status = RepairStatus.STANDBY_MODE;
-
+    @NotNull
     private BigDecimal cost;
-
+    @NotNull
     private String toDoDesc;
 
     /**
