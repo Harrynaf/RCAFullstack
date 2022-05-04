@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rcafullstack.enums.RepairStatus;
 import com.rcafullstack.enums.RepairType;
+import com.rcafullstack.model.User;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -27,7 +28,6 @@ public class RepairDTO implements Serializable {
     private Date date;
     @NotNull
     private String description;
-
     @NotNull
     private RepairType type;
     @NotNull
@@ -36,6 +36,8 @@ public class RepairDTO implements Serializable {
     private BigDecimal cost;
     @NotNull
     private String toDoDesc;
+    @NotNull
+    private PropertyDTO property;
 
     /**
      * NoArgs Constructor
@@ -52,17 +54,37 @@ public class RepairDTO implements Serializable {
      * @param cost
      * @param toDoDesc
      */
-    public RepairDTO(Date date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc) {
+    public RepairDTO(Date date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc, PropertyDTO property) {
         this.date = date;
         this.description = description;
         this.type = type;
         this.status = status;
         this.cost = cost;
         this.toDoDesc = toDoDesc;
+        this.property = property;
+    }
+
+    public RepairDTO(Long id, Date date, String description, RepairType type, RepairStatus status, BigDecimal cost, String toDoDesc, PropertyDTO property) {
+        this.id = id;
+        this.date = date;
+        this.description = description;
+        this.type = type;
+        this.status = status;
+        this.cost = cost;
+        this.toDoDesc = toDoDesc;
+        this.property = property;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public PropertyDTO getProperty() {
+        return property;
+    }
+
+    public void setProperty(PropertyDTO property) {
+        this.property = property;
     }
 
     public void setId(Long repairId) {
@@ -119,12 +141,15 @@ public class RepairDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "Repair{" + "repairId=" + id +
-                ", date=" + date + 
-                ", description=" + description + 
-                ", type=" + type + 
-                ", status=" + status + 
-                ", cost=" + cost + 
-                ", toDoDesc=" + toDoDesc + '}';
+        return "RepairDTO{" +
+                "id=" + id +
+                ", date=" + date +
+                ", description='" + description + '\'' +
+                ", type=" + type +
+                ", status=" + status +
+                ", cost=" + cost +
+                ", toDoDesc='" + toDoDesc + '\'' +
+                ", property=" + property +
+                '}';
     }
 }

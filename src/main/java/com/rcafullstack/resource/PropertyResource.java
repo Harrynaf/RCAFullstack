@@ -52,7 +52,7 @@ public class PropertyResource {
     @POST
     public Property saveProperty(PropertyDTO property)
     {try {return propertyService.create(convertToEntity(property));}
-    catch(EntityNotFoundException e){Property propertyError =new Property(); propertyError.setId(-1L); return propertyError;}}
+    catch(Exception e){Property propertyError =new Property(); propertyError.setId(-1L); return propertyError;}}
 
     @Path("/")
     @PUT

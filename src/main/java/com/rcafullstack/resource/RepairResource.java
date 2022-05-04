@@ -54,7 +54,7 @@ public class RepairResource {
     @POST
     public Repair saveRepair(RepairDTO repair)
     {try {return repairService.create(convertToEntity(repair));}
-    catch(EntityNotFoundException e){Repair repairError =new Repair(); repairError.setId(-1L); return repairError;}}
+    catch(Exception e){Repair repairError =new Repair(); repairError.setId(-1L); return repairError;}}
 
     @Path("/")
     @PUT
