@@ -37,8 +37,7 @@ public class User implements Serializable {
     private User_Type user_Type;
 
 
-    @OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    @JsonManagedReference(value="userRef")
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<Property> properties;
 
     public User() {

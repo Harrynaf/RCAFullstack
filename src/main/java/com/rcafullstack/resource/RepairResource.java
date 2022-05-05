@@ -20,7 +20,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RepairResource {
-    private static final String DELETED="Deleted.";
+    private static final String DELETED="Deleted repair.";
     private static final String NOTFOUND="Not found.";
     //@Inject
     private ModelMapper modelMapper = new ModelMapper();

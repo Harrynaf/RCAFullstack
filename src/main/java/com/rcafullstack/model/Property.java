@@ -38,10 +38,8 @@ public class Property implements Serializable {
     @Enumerated(value = EnumType.STRING)
     private PropertyType type;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonBackReference(value="userRef")
     private User owner;
-    @OneToMany(mappedBy = "property", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    @JsonManagedReference(value="repairRef")
+    @OneToMany(mappedBy = "property", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<Repair> repairs;
 
     public Property() {
